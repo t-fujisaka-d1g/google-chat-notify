@@ -15,10 +15,20 @@ jobs:
           npm install
       - run: |
           npm run all
-  test: # make sure the action works on a clean machine without building
+  test1:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./
         with:
-          milliseconds: 1000
+          webhook-url: {{ secrets.WEBHOOK_URL }}
+          message: 送信テスト1
+  test2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./
+        with:
+          webhook-url: {{ secrets.WEBHOOK_URL }}
+          topic-id: {{ secrets.TOPIC_ID }}
+          message: 送信テスト2
