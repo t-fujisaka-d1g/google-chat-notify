@@ -1,13 +1,13 @@
 ## 使い方
 ```yaml
-uses: t-fujisaka-d1g/send-google-chat-action
+uses: t-fujisaka-d1g/google-chat-notify
 with:
   webhook-url: <Webhook URL>
   message: <送信するメッセージ>
   topic-id: <送信先スレッド>
 ```
 ```yaml
-uses: t-fujisaka-d1g/send-google-chat-action
+uses: t-fujisaka-d1g/google-chat-notify
 with:
   webhook-url: <Webhook URL>
   message: <送信するメッセージ>
