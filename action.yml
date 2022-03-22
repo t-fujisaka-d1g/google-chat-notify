@@ -2,10 +2,15 @@ name: 'Your name here'
 description: 'Provide a description here'
 author: 'Your name or organization here'
 inputs:
-  milliseconds: # change this
+  webhook-url:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'GoogleChat WebhookのURL'
+  message:
+    required: true
+    description: '送信するメッセージ'
+  topic-id:
+    required: false
+    description: '送信先のスレッド指定(topic-id)'
 runs:
   using: 'node16'
   main: 'dist/index.js'
