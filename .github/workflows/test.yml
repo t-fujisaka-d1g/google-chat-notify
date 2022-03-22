@@ -15,19 +15,18 @@ jobs:
           npm install
       - run: |
           npm run all
-  test1:
+  test:
+    if: github.actor != 'dependabot[bot]' # dependabot[bot]経由の場合は実行しない
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./
+      - name: 送信テスト1
+        uses: ./
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           message: 送信テスト1
-  test2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./
+      - name: 送信テスト2
+        uses: ./
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           topic-id: ${{ secrets.TOPIC_ID }}
