@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./
         with:
-          webhook-url: {{ secrets.WEBHOOK_URL }}
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
           message: 送信テスト1
   test2:
     runs-on: ubuntu-latest
@@ -29,6 +29,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./
         with:
-          webhook-url: {{ secrets.WEBHOOK_URL }}
-          topic-id: {{ secrets.TOPIC_ID }}
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          topic-id: ${{ secrets.TOPIC_ID }}
           message: 送信テスト2
