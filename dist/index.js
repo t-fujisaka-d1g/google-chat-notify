@@ -6,29 +6,6 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -43,7 +20,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Chat = void 0;
-const core = __importStar(__nccwpck_require__(2186));
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class Chat {
@@ -61,14 +37,7 @@ class Chat {
                         name: threadName
                     }
                 };
-            core.debug(`data: ${JSON.stringify(data, null, '  ')}`);
-            try {
-                const result = yield axios_1.default.post(params.webhookUrl, data);
-                return result.status === 200;
-            }
-            catch (e) {
-                return false;
-            }
+            yield axios_1.default.post(params.webhookUrl, data);
         });
     }
     static calcThreadName(webhookUrl, topicId) {
@@ -133,16 +102,12 @@ function run() {
             const webhookUrl = core.getInput('webhook-url', { required: true });
             const message = core.getInput('message', { required: true });
             const topicId = core.getInput('topic-id');
-            core.debug(`webhookUrl: ${webhookUrl}`);
-            core.debug(`topicId: ${topicId}`);
-            core.debug(`message: ${message}`);
             const params = {
                 webhookUrl,
                 message,
                 topicId: topicId.length === 0 ? null : topicId
             };
-            const success = yield chat_1.Chat.send(params);
-            core.debug(`success: ${success}`);
+            yield chat_1.Chat.send(params);
             core.setOutput('time', new Date().toTimeString());
         }
         catch (error) {
