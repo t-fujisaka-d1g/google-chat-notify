@@ -1,4 +1,3 @@
-import * as core from '@actions/core'
 import axios from 'axios'
 
 export type Params = {
@@ -17,7 +16,7 @@ export type Thread = {
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class Chat {
-  static async send(params: Params): Promise<boolean> {
+  static async send(params: Params): Promise<void> {
     const threadName = this.calcThreadName(
       params.webhookUrl,
       params.topicId ?? null
@@ -33,14 +32,7 @@ export class Chat {
               name: threadName
             }
           }
-    core.debug(`data: ${JSON.stringify(data, null, '  ')}`)
-
-    try {
-      const result = await axios.post(params.webhookUrl, data)
-      return result.status === 200
-    } catch (e) {
-      return false
-    }
+    await axios.post(params.webhookUrl, data)
   }
 
   private static calcThreadName(
@@ -53,6 +45,7 @@ export class Chat {
     }
     return `spaces/${spaceId}/threads/${topicId}`
   }
+
   private static calcSpaceId(webhookUrl: string): string | null {
     return webhookUrl.split('/')[5]
   }
