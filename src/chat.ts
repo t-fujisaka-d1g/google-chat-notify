@@ -3,7 +3,7 @@ import axios from 'axios'
 export type Params = {
   webhookUrl: string
   topicId: string | null
-  message: string
+  text: string
 }
 
 export type Data = {
@@ -24,10 +24,10 @@ export class Chat {
     const data: Data =
       threadName === null
         ? {
-            text: params.message
+            text: params.text
           }
         : {
-            text: params.message,
+            text: params.text,
             thread: {
               name: threadName
             }
