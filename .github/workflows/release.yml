@@ -36,5 +36,6 @@ jobs:
           git push origin :v1
       - name: V1タグを作成
         run: |
+          git fetch --tags
           git tag v1
           git push origin :v1
