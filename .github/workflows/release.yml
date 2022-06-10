@@ -29,6 +29,7 @@ jobs:
           git push --force origin releases/v1
       - name: V1タグを削除
         run: |
+          git tag
           git tag -d v1
           git push origin :v1
       - name: V1タグを作成
