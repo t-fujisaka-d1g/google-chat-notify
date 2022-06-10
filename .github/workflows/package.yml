@@ -38,3 +38,9 @@ jobs:
             git commit -a -m "prod dependencies"
             git push --force origin main
           fi
+
+      - name: V1タグを更新
+        run: |
+          git push -d origin v1
+          git tag v1
+          git push origin v1 
