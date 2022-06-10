@@ -1,0 +1,22 @@
+name: release
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npm run build
+      - run: npm run package
+      - run: git add dist
+      - run: git commit -a -m "prod dependencies"
+      - run: git push --force origin releases/v1
