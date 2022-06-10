@@ -15,12 +15,15 @@ jobs:
         with:
           node-version: 16.x
       - run: npm ci
-      - run: |
+      - name: ビルド＆パッケージ
+        run: |
           npm run build
           npm run package
-      - run: |
+      - name: releases/v1ブランチを更新
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git checkout -b releases/v1
           git add dist
           git commit -a -m "prod dependencies"
           git push --force origin releases/v1
