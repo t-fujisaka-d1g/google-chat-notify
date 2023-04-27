@@ -119,7 +119,6 @@ function run() {
                 topicId: topicId.length === 0 ? null : topicId
             };
             yield chat_1.Chat.send(params);
-            core.setOutput('time', new Date().toTimeString());
         }
         catch (error) {
             if (error instanceof Error)
