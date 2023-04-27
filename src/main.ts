@@ -33,7 +33,6 @@ async function run(): Promise<void> {
       topicId: topicId.length === 0 ? null : topicId
     }
     await Chat.send(params)
-    core.setOutput('time', new Date().toTimeString())
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
