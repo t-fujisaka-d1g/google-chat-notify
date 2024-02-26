@@ -19,8 +19,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Chat = void 0;
+exports.Chat = exports.MessageReplyOptions = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(6545));
+/**
+ * メッセージの返信オプション
+ * https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/create?hl=ja#MessageReplyOption
+ */
+exports.MessageReplyOptions = {
+    /**
+     * デフォルト。新しいスレッドを開始します。
+     * このオプションを使用すると、含まれる thread ID または threadKey がすべて無視されます。
+     */
+    OptionUnspecified: 'MESSAGE_REPLY_OPTION_UNSPECIFIED',
+    /**
+     * thread ID または threadKey で指定されたスレッドへの返信としてメッセージを作成します。
+     * 失敗した場合は、代わりに新しいスレッドが開始されます。
+     */
+    FallBackToNewThread: 'REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD',
+    /**
+     * thread ID または threadKey で指定されたスレッドへの返信としてメッセージを作成します。
+     * 新しい threadKey を使用すると、新しいスレッドが作成されます。
+     * メッセージの作成に失敗した場合は、代わりに NOT_FOUND エラーが返されます。
+     */
+    OrFail: 'REPLY_MESSAGE_OR_FAIL'
+};
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class Chat {
     static send(params) {
@@ -37,7 +59,11 @@ class Chat {
                         name: threadName
                     }
                 };
-            yield axios_1.default.post(params.webhookUrl, data);
+            const messageReplyOption = exports.MessageReplyOptions.FallBackToNewThread;
+            const url = params.webhookUrl.includes('?')
+                ? `${params.webhookUrl}&messageReplyOption=${messageReplyOption}`
+                : `${params.webhookUrl}?messageReplyOption=${messageReplyOption}`;
+            yield axios_1.default.post(url, data);
         });
     }
     static calcThreadName(webhookUrl, topicId) {
