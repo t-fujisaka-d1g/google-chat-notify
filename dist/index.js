@@ -59,7 +59,9 @@ class Chat {
                         name: threadName
                     }
                 };
-            const messageReplyOption = exports.MessageReplyOptions.FallBackToNewThread;
+            const messageReplyOption = params.topicId === null
+                ? exports.MessageReplyOptions.OptionUnspecified
+                : exports.MessageReplyOptions.FallBackToNewThread;
             const url = params.webhookUrl.includes('?')
                 ? `${params.webhookUrl}&messageReplyOption=${messageReplyOption}`
                 : `${params.webhookUrl}?messageReplyOption=${messageReplyOption}`;
