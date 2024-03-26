@@ -59,7 +59,9 @@ export class Chat {
           }
 
     const messageReplyOption: MessageReplyOption =
-      MessageReplyOptions.FallBackToNewThread
+      params.topicId === null
+        ? MessageReplyOptions.OptionUnspecified
+        : MessageReplyOptions.FallBackToNewThread
 
     const url = params.webhookUrl.includes('?')
       ? `${params.webhookUrl}&messageReplyOption=${messageReplyOption}`
