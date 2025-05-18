@@ -139,7 +139,7 @@ function run() {
         try {
             const webhookUrl = core.getInput('webhook-url', { required: true });
             const message = core.getInput('message', { required: true });
-            const icon = core.getInput('prefix');
+            const icon = core.getInput('icon');
             const topicId = core.getInput('topic-id');
             const texts = [];
             if (icon.length > 0) {
