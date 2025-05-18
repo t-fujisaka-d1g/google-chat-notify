@@ -139,11 +139,19 @@ function run() {
         try {
             const webhookUrl = core.getInput('webhook-url', { required: true });
             const message = core.getInput('message', { required: true });
+            const icon = core.getInput('prefix');
             const topicId = core.getInput('topic-id');
-            const links = createLinks(github.context);
+            const texts = [];
+            if (icon.length > 0) {
+                texts.push(icon);
+            }
+            texts.push(...createLinks(github.context));
+            if (message.length > 0) {
+                texts.push(message);
+            }
             const params = {
                 webhookUrl,
-                text: `${links.join(' ')} ${message}`,
+                text: texts.join(' '),
                 topicId: topicId.length === 0 ? null : topicId
             };
             yield chat_1.Chat.send(params);
