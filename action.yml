@@ -8,6 +8,9 @@ inputs:
   message:
     required: true
     description: '送信するメッセージ'
+  icon:
+    required: false
+    description: 'ワークフローリンクなどの前に配置するテキスト'
   topic-id:
     required: false
     description: '送信先のスレッド指定(topic-id)'

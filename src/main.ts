@@ -24,12 +24,21 @@ async function run(): Promise<void> {
   try {
     const webhookUrl: string = core.getInput('webhook-url', {required: true})
     const message: string = core.getInput('message', {required: true})
+    const icon: string = core.getInput('prefix')
     const topicId: string = core.getInput('topic-id')
 
-    const links = createLinks(github.context)
+    const texts:string[] =[]
+    if(icon.length > 0) {
+      texts.push(icon)
+    }
+    texts.push(...createLinks(github.context))
+    if(message.length > 0) {
+      texts.push(message)
+    }
+
     const params: Params = {
       webhookUrl,
-      text: `${links.join(' ')} ${message}`,
+      text: texts.join(' '),
       topicId: topicId.length === 0 ? null : topicId
     }
     await Chat.send(params)
