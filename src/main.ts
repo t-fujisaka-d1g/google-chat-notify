@@ -24,7 +24,7 @@ async function run(): Promise<void> {
   try {
     const webhookUrl: string = core.getInput('webhook-url', {required: true})
     const message: string = core.getInput('message', {required: true})
-    const icon: string = core.getInput('prefix')
+    const icon: string = core.getInput('icon')
     const topicId: string = core.getInput('topic-id')
 
     const texts:string[] =[]
